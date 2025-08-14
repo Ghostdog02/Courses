@@ -7,6 +7,8 @@
         name="title"
         ngModel
         required
+        minlength="3"
+        placeholder="Post Title"
         #title="ngModel"
       />
       @if (title.invalid) {
@@ -20,6 +22,7 @@
         name="content"
         ngModel
         required
+        placeholder="Post Content"
         #content="ngModel"
       ></textarea>
       @if (title.invalid) {
