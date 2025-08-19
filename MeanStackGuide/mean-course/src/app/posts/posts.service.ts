@@ -38,12 +38,21 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
+  getPost(id: string): Post | null {
+    const post = this.posts.find((p) => p.id === id);
+    return post ? { ...post } : null;
+  }
+
   addPost(title: string, content: string) {
     const post: Post = { id: '', title: title, content: content };
     this.httpClient
-      .post<{ message: string }>('http://localhost:3000/api/posts', post)
+      .post<{ message: string; postId: string }>(
+        'http://localhost:3000/api/posts',
+        post
+      )
       .subscribe((responseData) => {
-        console.log(responseData.message);
+        const postId = responseData.postId;
+        post.id = postId;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
       });
