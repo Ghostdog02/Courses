@@ -7,3 +7,16 @@ textarea {
 mat-spinner {
     align-self: center;
 }
+
+input[type="file"] {
+    visibility: hidden;
+}
+
+.image-preview {
+    height: 25rem;
+    margin: 1rem 0;
+}
+
+.image-preview img {
+    height: 100%;
+}
