@@ -1,6 +1,7 @@
+import Post from "../models/post.js";
+
 import express from "express";
 import multer from "multer";
-import Post from "../models/post.js";
 
 const router = express.Router();
 
@@ -62,7 +63,7 @@ router.put(
       _id: req.body.id,
       title: req.body.title,
       content: req.body.content,
-      imagePath: imagePath
+      imagePath: imagePath,
     });
     console.log(post);
     Post.updateOne({ _id: req.params.id }, post).then((result) => {
@@ -73,9 +74,11 @@ router.put(
 );
 
 router.get("", (req, response, next) => {
-  const pageSize = +req.query.pageSize;
+  const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const postQuery = Post.find();
+  let fetchedPosts;
+
   //If not undefined
   if (currentPage && pageSize) {
     postQuery
@@ -83,10 +86,16 @@ router.get("", (req, response, next) => {
       .limit(pageSize);
   }
 
-  postQuery.then((documents) => {
+  postQuery
+    .then((documents) => {
+      fetchedPosts = documents;
+      return Post.count();
+    })
+    .then((count) => {
     response.status(200).json({
       message: "Posts fetched successfully",
-      posts: documents,
+      posts: fetchedPosts,
+      maxPosts: count
     });
   });
 });

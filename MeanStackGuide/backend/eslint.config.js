@@ -13,6 +13,7 @@ export default defineConfig([
     },
     extends: ["js/recommended"],
     rules: {
+      ...js.configs.recommended.rules,
       "no-unused-vars": "warn",
       "no-undef": "warn",
     },
