@@ -1,8 +1,8 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose").Model;
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import express from 'express';
 
-const postsRoutes = require('./routes/posts');
+import postsRoutes from './routes/posts.js';
 
 const app = express();
 
@@ -37,4 +37,4 @@ app.use((req, res, next) => {
 
 app.use('/api/posts', postsRoutes);
 
-module.exports = app;
+export default app;

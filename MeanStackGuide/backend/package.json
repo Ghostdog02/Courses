@@ -16,5 +16,6 @@
   },
   "scripts": {
     "start:server": "nodemon server.js"
-  }
+  },
+  "type": "module"
 }

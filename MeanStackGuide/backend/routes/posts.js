@@ -1,7 +1,6 @@
-// const express = require("express");
-import { express } from "express";
-const multer = require("multer");
-import { Post } from "../models/post";
+import express from "express";
+import multer from "multer";
+import Post from "../models/post.js";
 
 const router = express.Router();
 
@@ -109,4 +108,4 @@ router.delete("/:id", (req, res, next) => {
   });
 });
 
-module.exports = router;
+export default router;

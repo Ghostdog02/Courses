@@ -1,6 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
-
-const Schema = mongoose.Schema;
+import {mongoose,  Schema } from "mongoose";
 
 const postSchema = Schema({
   title: { type: String, required: true },
