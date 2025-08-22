@@ -1,7 +1,6 @@
 @if(isLoading) {
 <mat-spinner></mat-spinner>
-} @else if (posts.length > 0)
-  {
+} @else if (posts.length > 0) {
       <mat-accordion multi="true">
         @for (post of posts; track $index) {
           <mat-expansion-panel>
@@ -23,7 +22,7 @@
         [pageSizeOptions]="pageSizeOptions"
         (page)="onChangedPage($event)"
         ></mat-paginator>
-} @else { 
+  } @else { 
     <p class="info-text mat-body-1">No posts added yet!</p>
 } 
 
