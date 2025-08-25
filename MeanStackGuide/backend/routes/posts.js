@@ -2,6 +2,7 @@ import Post from "../models/post.js";
 
 import express from "express";
 import multer from "multer";
+import checkAuth from "../middleware/check-auth.js";
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ const MIME_TYPE_MAP = {
 };
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (_req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error("Invalid mime type");
     if (isValid) {
@@ -21,7 +22,7 @@ const storage = multer.diskStorage({
 
     cb(error, "../backend/images");
   },
-  filename: (req, file, cb) => {
+  filename: (_req, file, cb) => {
     const name = file.originalname.toLowerCase().split(" ").join("-");
     const ext = MIME_TYPE_MAP[file.mimetype];
     cb(null, name + "-" + Date.now() + "." + ext);
@@ -30,8 +31,9 @@ const storage = multer.diskStorage({
 
 router.post(
   "",
+  checkAuth,
   multer({ storage: storage }).single("image"),
-  (req, res, next) => {
+  (req, res) => {
     const url = req.protocol + "://" + req.get("host");
     const post = new Post({
       title: req.body.title,
@@ -52,8 +54,9 @@ router.post(
 
 router.put(
   "/:id",
+  checkAuth,
   multer({ storage: storage }).single("image"),
-  (req, res, next) => {
+  (req, res) => {
     let imagePath = req.body.imagePath;
     if (req.file) {
       const url = req.protocol + "://" + req.get("host");
@@ -73,7 +76,7 @@ router.put(
   }
 );
 
-router.get("", (req, response, next) => {
+router.get("", (req, response) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const postQuery = Post.find();
@@ -100,7 +103,7 @@ router.get("", (req, response, next) => {
   });
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", (req, res) => {
   Post.findById(req.params.id).then((post) => {
     if (post) {
       res.status(200).json(post);
@@ -110,7 +113,7 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", checkAuth,(req, res) => {
   Post.deleteOne({ _id: req.params.id }).then((result) => {
     console.log(result);
     res.status(200).json({ message: "Post deleted!" });

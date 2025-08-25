@@ -7,7 +7,7 @@
         {
             "name": "Launch Node debugger",
             "debugServer": 3000,
-            "program": "/mount/Projects/Courses/MeanStackGuide/mean-course/backend",
+            "program": "/mnt/Programming/Projects/Tutorials/MeanStackGuide/backend",
             "request": "launch",    
             "type": "node"
         },
@@ -17,7 +17,7 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
-            "webRoot": "/mount/Projects/Courses/MeanStackGuide/mean-course",
+            "webRoot": "/mnt/Programming/Projects/Tutorials/MeanStackGuide/frontend",
             "runtimeExecutable": "/usr/bin/brave-browser-stable"
         },
     ]

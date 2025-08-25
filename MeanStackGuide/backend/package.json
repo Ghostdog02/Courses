@@ -3,6 +3,7 @@
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.18.0",
     "mongoose": "^8.17.2",
     "mongoose-unique-validator": "^4.0.1",
