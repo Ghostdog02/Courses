@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import express from 'express';
 
 import postsRoutes from './routes/posts.js';
+import authRoutes from './routes/auth.js';
 
 const app = express();
 
@@ -36,5 +37,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/posts', postsRoutes);
+app.use('/api/auth', authRoutes)
 
 export default app;
