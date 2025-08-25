@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "moment": "^2.30.1",
+    "uniq": "^1.0.1"
+  },
+  "name": "npm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
