@@ -4,20 +4,38 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        // {
+        //     "name": "Launch Node debugger",
+        //     "program": "/mount/Projects/Courses/MeanStackGuide/backend",
+        //     "request": "launch",    
+        //     "type": "node"
+        // },
         {
-            "name": "Launch Node debugger",
-            "debugServer": 3000,
-            "program": "/mnt/Programming/Projects/Tutorials/MeanStackGuide/backend",
-            "request": "launch",    
-            "type": "node"
+            "name": "Debug Express Server",
+            "type": "node",
+            "request": "launch",
+            "program": "/mount/Projects/Courses/MeanStackGuide/backend/server.js",
+            "console": "integratedTerminal",
+            "restart": true,
+            "env": {
+                "NODE_ENV": "development",
+                "PORT": "3000"
+            },
+            "skipFiles": [
+                "/mount/Projects/Courses/MeanStackGuide/backend/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "<node_internals>/**", 
+                "**/node_modules/**",
+                "<node_internals>/internal/**",
+            ],
+            "smartStep": true
         },
-
         {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
-            "webRoot": "/mnt/Programming/Projects/Tutorials/MeanStackGuide/frontend",
+            "webRoot": "/mount/Projects/Courses/MeanStackGuide/frontend",
             "runtimeExecutable": "/usr/bin/brave-browser-stable"
         },
     ]

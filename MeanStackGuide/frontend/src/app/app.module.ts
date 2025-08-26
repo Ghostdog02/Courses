@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { App } from './app';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
@@ -20,7 +20,7 @@ import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { AuthInterceptor } from './auth/auth-interceptor';
+import { authInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -47,9 +47,9 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatPaginatorModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     provideBrowserGlobalErrorListeners(), 
-    provideHttpClient()
+    provideHttpClient(withInterceptors([authInterceptor])),
   ],
   bootstrap: [App],
 })
