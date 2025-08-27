@@ -47,7 +47,6 @@ import { authInterceptor } from './auth/auth-interceptor';
     MatPaginatorModule,
   ],
   providers: [
-    // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     provideBrowserGlobalErrorListeners(), 
     provideHttpClient(withInterceptors([authInterceptor])),
   ],

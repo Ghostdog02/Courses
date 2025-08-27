@@ -1,8 +1,6 @@
 <mat-card>
   @if(isLoading == true) {
-    <mat-spinner>
-    
-    </mat-spinner>
+    <mat-spinner></mat-spinner>
   } @else {
       <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
         <mat-form-field>
