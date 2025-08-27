@@ -36,7 +36,15 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
             "webRoot": "/mount/Projects/Courses/MeanStackGuide/frontend",
-            "runtimeExecutable": "/usr/bin/brave-browser-stable"
+            "runtimeExecutable": "/usr/bin/brave-browser-stable",
+            "skipFiles": [
+                "$/mount/Projects/Courses/MeanStackGuide/frontend/node_modules/**/*.js",
+                "$/mount/Projects/Courses/MeanStackGuide/frontend/lib/**/*.js",
+                "<node_internals>/**/*.js",
+                "<node_internals>/**", 
+                "**/node_modules/**",
+                "<node_internals>/internal/**",
+            ]
         },
     ]
 }

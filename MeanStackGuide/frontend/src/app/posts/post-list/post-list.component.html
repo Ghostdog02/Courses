@@ -11,8 +11,12 @@
               <img [src]="post.imagePath" [alt]="post.title">
             </div>
             <p>{{ post.content }}</p>
-            <a mat-button color="primary" [routerLink]="['/edit', post.id]">Edit</a>
-            <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
+            @if(userIsAuthenticated) {
+              <mat-action-row>
+                <a mat-button color="primary" [routerLink]="['/edit', post.id]">Edit</a>
+                <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
+              </mat-action-row>
+            }
           </mat-expansion-panel>
         }
       </mat-accordion>
