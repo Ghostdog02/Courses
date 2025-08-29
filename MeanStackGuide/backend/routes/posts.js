@@ -1,33 +1,24 @@
-import checkAuth from "../middleware/check-auth.js";
-
 import express from "express";
 
-import postsController from "../controllers/posts.js";
+import PostsController from "../controllers/posts.js";
+
+import extractFile from "../middleware/file.js";
+import checkAuth from "../middleware/check-auth.js";
 
 const router = express.Router();
 
-router.post(
-  "",
-  checkAuth,
-  postsController.configureMulter,
-  postsController.createPost
-);
+router.post("", checkAuth, extractFile, PostsController.createPost);
 
-router.put(
-  "/:id",
-  checkAuth,
-  postsController.configureMulter,
-  postsController.editPost
-);
+router.put("/:id", checkAuth, extractFile, PostsController.editPost);
 
-router.get("", postsController.getPost);
+router.get("", PostsController.getPosts);
 
-router.get("/:id", postsController.getPosts);
+router.get("/:id", PostsController.getPost);
 
 router.delete(
   "/:id",
   checkAuth,
-  postsController.deletePost
+  PostsController.deletePost
 );
 
 export default router;
