@@ -12,9 +12,17 @@ export function errorInterceptor(
     let dialog = inject(MatDialog);
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
-            this.dialog.open(ErrorComponent)
-            console.log(error);
-            alert(error.error.message);
+            let errorMessage = 'An unknown error occurred';
+            if (error.error.message) {
+                errorMessage = error.error.message;
+            }
+            dialog.open(ErrorComponent, {
+              data: {message: errorMessage},
+              width: '400px',
+              disableClose: false,
+            });
+            // console.log(error);
+            // alert(error.error.message);
             return throwError(() => {
                 return error;
             });

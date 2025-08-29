@@ -10,6 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
@@ -19,11 +20,10 @@ import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ErrorComponent } from './error/error.component';
 
 import { authInterceptor } from './auth/auth-interceptor';
 import { errorInterceptor } from './error-interceptor';
-import { MatDialogModule } from '@angular/material/dialog';
-import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [

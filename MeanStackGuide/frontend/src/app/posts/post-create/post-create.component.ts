@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from '../posts.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from '../post.model';
 import { mimeType } from './mime-type.type.validator';
+import { Subscription } from 'rxjs';
+import { EMPTY_SUBSCRIPTION } from 'rxjs/internal/Subscription';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-post-create',
@@ -12,9 +15,10 @@ import { mimeType } from './mime-type.type.validator';
   styleUrls: ['./post-create.component.css'],
   standalone: false,
 })
-export class PostCreateComponent implements OnInit {
+export class PostCreateComponent implements OnInit, OnDestroy {
   private mode = 'create';
   private postId: string | null = null;
+  private authStatusSub: Subscription = EMPTY_SUBSCRIPTION;
 
   post: Post | null = null;
   isLoading = false;
@@ -23,40 +27,44 @@ export class PostCreateComponent implements OnInit {
 
   constructor(
     public postsService: PostsService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((authStatus) => {
+        this.isLoading = false;
+      });
     this.form = new FormGroup({
-      'title': new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
+      title: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)],
       }),
-      'content': new FormControl(null, { validators: [Validators.required] }),
-      'image': new FormControl(null, {
-          validators: [Validators.required],
-          asyncValidators: [mimeType]
-      })
+      content: new FormControl(null, { validators: [Validators.required] }),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType],
+      }),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('postId')) {
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
         this.isLoading = true;
-        this.postsService
-          .getPost(this.postId!)
-          .subscribe((postData) => {
+        this.postsService.getPost(this.postId!).subscribe((postData) => {
           this.isLoading = false;
           this.post = {
             id: postData._id,
             title: postData.title,
             content: postData.content,
             imagePath: postData.imagePath,
-            creator: postData.creator
+            creator: postData.creator,
           };
           this.form?.setValue({
-            'title': this.post.title,
-            'content': this.post.content,
-            'image': this.post.imagePath
+            title: this.post.title,
+            content: this.post.content,
+            image: this.post.imagePath,
           });
         });
       } else {
@@ -73,12 +81,15 @@ export class PostCreateComponent implements OnInit {
       throw new Error('Error converting input to HTMLInputElement');
     }
 
-    const file = conversion.files && conversion.files.length > 0 ? conversion.files[0] : null;
+    const file =
+      conversion.files && conversion.files.length > 0
+        ? conversion.files[0]
+        : null;
     if (!file) {
       throw new Error('No file was selected');
     }
-    
-    this.form.patchValue({ 'image': file });
+
+    this.form.patchValue({ image: file });
     this.form.get('image')?.updateValueAndValidity();
     console.log(file);
     console.log(this.form);
@@ -87,11 +98,11 @@ export class PostCreateComponent implements OnInit {
       if (this.imagePreview == null) {
         throw new Error('The image for preview was null');
       } else {
-        this.imagePreview = (typeof reader.result) === 'string' ? reader.result : '';
+        this.imagePreview =
+          typeof reader.result === 'string' ? reader.result : '';
       }
     };
     reader.readAsDataURL(file);
-    
   }
 
   onSavePost() {
@@ -117,5 +128,9 @@ export class PostCreateComponent implements OnInit {
     }
 
     this.form.reset();
+  }
+
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe();
   }
 }

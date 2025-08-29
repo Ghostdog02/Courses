@@ -1,72 +1,11 @@
 import express from "express";
-import User from "../models/user.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+
+import UserController from "../controllers/auth.js";
 
 const router = express.Router();
 
-router.post("/signup", (req, res) => {
-  bcrypt
-    .hash(req.body.password, 10)
-    .then(hash => {
-        const user = new User({
-          email: req.body.email,
-          password: hash,
-        });
-        user.save()
-          .then(result => {
-            res.status(201).json({
-                message: 'User has been created',
-                result: result
-            });
-          })
-          .catch(err => {
-            res.status(500).json({
-              error: err
-            });
-          });
-    })
-  
-});
+router.post("/signup", UserController.createUser);
 
-router.post("/login", (req, res) => {
-  let fetchedUser;
-  
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      if (!user) {
-        return res.status(401).json({
-          message: 'Auth failed'
-        });
-      }
-
-      fetchedUser = user;
-      return bcrypt.compare(req.body.password, user.password);
-    })
-    .then((result) => {
-      if (!result) {
-        return res.status(401).json({
-          message: "Auth failed",
-        });
-      }
-
-      const token = jwt.sign(
-        { email: fetchedUser.email, userId: fetchedUser._id },
-        "secret_this_should_be_longer",
-        { expiresIn: "1h" }
-      );
-
-      res.status(200).json({
-        token: token,
-        expiresIn: 3600,
-        userId: fetchedUser._id
-      }); 
-    })
-    .catch(err => {
-      return res.status(401).json({
-        message: "Auth failed",
-      });
-    })
-});
+router.post("/login", UserController.loginUser);
 
 export default router;
