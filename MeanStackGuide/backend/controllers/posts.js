@@ -74,18 +74,16 @@ export const getPosts = (req, res) => {
       return Post.countDocuments();
     })
     .then((count) => {
-      res
-        .status(200)
-        .json({
-          message: "Posts fetched successfully",
-          posts: fetchedPosts,
-          maxPosts: count,
-        })
-        .catch(() => {
-          res.status(500).json({
-            message: "Fetching posts failed",
-          });
-        });
+      res.status(200).json({
+        message: "Posts fetched successfully",
+        posts: fetchedPosts,
+        maxPosts: count,
+      });
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "Fetching posts failed",
+      });
     });
 };
 
