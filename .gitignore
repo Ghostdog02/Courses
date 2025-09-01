@@ -576,4 +576,8 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+#Ignore vscode config files
+.vscode/
+!.vscode/launch.json
+
 # End of https://www.toptal.com/developers/gitignore/api/angular,csharp,node,dotnetcore
