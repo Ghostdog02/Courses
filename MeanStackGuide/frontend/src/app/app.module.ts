@@ -1,25 +1,14 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatDialogModule } from '@angular/material/dialog';
+import { AngularMaterialModule } from './angular-material.module';
+import { PostsModule } from './posts/posts.module'; 
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { App } from './app';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { HeaderComponent } from './header/header.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { ErrorComponent } from './error/error.component';
 
 import { authInterceptor } from './auth/auth-interceptor';
@@ -28,33 +17,20 @@ import { errorInterceptor } from './error-interceptor';
 @NgModule({
   declarations: [
     App,
-    PostCreateComponent,
     HeaderComponent,
-    PostListComponent,
-    LoginComponent,
-    SignupComponent,
     ErrorComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    MatPaginatorModule,
-    MatDialogModule,
+    AngularMaterialModule,
+    PostsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
   ],
   bootstrap: [App],
-
 })
 export class AppModule {}

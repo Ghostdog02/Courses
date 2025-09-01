@@ -44,7 +44,7 @@ export const editPost = (req, res) => {
   console.log(post);
   Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then((result) => {
-      if (result.modifiedCount > 0) {
+      if (result.matchedCount > 0) {
         res.status(200).json({ message: "Update successful" });
       } else {
         res.status(401).json({ message: "Not authorized" });

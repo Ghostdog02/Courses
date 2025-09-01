@@ -15,8 +15,6 @@ const storage = multer.diskStorage({
       error = null;
     }
 
-    //"backend/images"
-    // cb(error, "/backend/images");
     cb(error, path.join(path.resolve(), "images"));
   },
   filename: (req, file, cb) => {
@@ -28,9 +26,7 @@ const storage = multer.diskStorage({
 
 const extractFile = multer({ storage: storage }).single("image");
 
-export default extractFile
-
-// module.exports = multer({ storage: storage }).single("image");
+export default extractFile;
 
   
 

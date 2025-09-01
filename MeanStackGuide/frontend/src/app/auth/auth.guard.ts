@@ -15,7 +15,7 @@ export function authGuard(route: ActivatedRouteSnapshot,
     const isAuth = inject(AuthService).getIsAuth();
     
     if (!isAuth) {
-        router.navigate(['/login']);
+        router.navigate(['/auth/login']);
     }
 
     return isAuth;
