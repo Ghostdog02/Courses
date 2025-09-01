@@ -13,6 +13,7 @@ export const createPost = (req, res) => {
   post
     .save()
     .then((createdPost) => {
+      console.log(createdPost);
       res.status(201).json({
         message: "Post added successfully",
         post: {
@@ -21,14 +22,14 @@ export const createPost = (req, res) => {
         },
       });
     })
-    .catch(() => {
+    .catch((error) => {
       res.status(500).json({
         message: "Creating a post failed",
       });
     });
 };
 
-export const editPost = (req, res) => {
+export const updatePost = (req, res) => {
   let imagePath = req.body.imagePath;
   if (req.file) {
     const url = req.protocol + "://" + req.get("host");
@@ -84,7 +85,11 @@ export const getPosts = (req, res) => {
       res.status(500).json({
         message: "Fetching posts failed",
       });
+<<<<<<< HEAD
     });
+=======
+    });;
+>>>>>>> 519bc78 (.gitignore is now working)
 };
 
 export const getPost = (req, res) => {
@@ -123,7 +128,7 @@ export const deletePost = (req, res) => {
 
 export default {
     createPost,
-    editPost,
+    updatePost,
     getPosts,
     getPost,
     deletePost

@@ -576,17 +576,12 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-<<<<<<< HEAD
-#Ignore vscode config files
-.vscode/
-!.vscode/launch.json
 
-=======
 #VS Code Config
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
->>>>>>> 519bc78 (.gitignore is now working)
-# End of https://www.toptal.com/developers/gitignore/api/angular,csharp,node,dotnetcore
+
+# End of https://www.toptal.com/developers/gitignore/api/angular,csharp,node,dotnetcorе

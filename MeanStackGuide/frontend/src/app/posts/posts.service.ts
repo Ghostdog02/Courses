@@ -37,7 +37,6 @@ export class PostsService {
         })
       )
       .subscribe((transformedPostData) => {
-        console.log(transformedPostData);
         this.posts = transformedPostData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],
@@ -104,8 +103,8 @@ export class PostsService {
 
     this.httpClient
       .put('http://localhost:3000/api/posts/' + id, postData)
-      .subscribe(() => {
-        this.router.navigate(['/']);
+      .subscribe({
+        next: () => this.router.navigate(['/']),
       });
   }
 

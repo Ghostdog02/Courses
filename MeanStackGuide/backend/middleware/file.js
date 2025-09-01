@@ -15,7 +15,11 @@ const storage = multer.diskStorage({
       error = null;
     }
 
+<<<<<<< HEAD
     cb(error, path.join(path.resolve(), "images"));
+=======
+    cb(error, "../images");
+>>>>>>> 519bc78 (.gitignore is now working)
   },
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(" ").join("-");

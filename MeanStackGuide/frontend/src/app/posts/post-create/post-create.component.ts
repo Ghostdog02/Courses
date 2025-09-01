@@ -95,8 +95,6 @@ export class PostCreateComponent implements OnInit, OnDestroy {
 
     this.form.patchValue({ image: file });
     this.form.get('image')?.updateValueAndValidity();
-    console.log(file);
-    console.log(this.form);
     const reader = new FileReader();
     reader.onload = () => {
       if (this.imagePreview == null) {
@@ -130,10 +128,14 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.form.value.title,
         this.form.value.content,
         this.form.value.image
-      );
+      )
     }
+<<<<<<< HEAD
 
     //this.isLoading = false;
+=======
+    
+>>>>>>> 519bc78 (.gitignore is now working)
     this.form.reset();
   }
 

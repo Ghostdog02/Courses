@@ -46,6 +46,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId()!;
       });
+    // this.isLoading = false;
   }
 
   onChangedPage(pageData: PageEvent) {
@@ -67,5 +68,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.postsSub.unsubscribe();
     this.authStatusSubs.unsubscribe();
+    this.isLoading = false;
   }
 }
