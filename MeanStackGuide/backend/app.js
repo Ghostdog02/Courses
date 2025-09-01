@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import express from 'express';
+import path from 'path';
 
 import postsRoutes from './routes/posts.js';
 import authRoutes from './routes/auth.js';
@@ -20,7 +21,11 @@ mongoose
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/images", express.static('./images'));
+// app.use("/images", express.static('./images'));
+app.use(
+  "/images",
+  express.static(path.join(path.resolve(), "images"))
+);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

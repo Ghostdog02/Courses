@@ -1,4 +1,5 @@
 import multer from "multer";
+import path from "path";
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -7,22 +8,29 @@ const MIME_TYPE_MAP = {
 };
 
 const storage = multer.diskStorage({
-  destination: (_req, file, cb) => {
+  destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error("Invalid mime type");
     if (isValid) {
       error = null;
     }
 
-    cb(error, "../backend/images");
+    //"backend/images"
+    // cb(error, "/backend/images");
+    cb(error, path.join(path.resolve(), "images"));
   },
-  filename: (_req, file, cb) => {
+  filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(" ").join("-");
     const ext = MIME_TYPE_MAP[file.mimetype];
     cb(null, name + "-" + Date.now() + "." + ext);
   },
 });
 
-export default () => {
-  multer({ storage: storage }).single("image");
-};
+const extractFile = multer({ storage: storage }).single("image");
+
+export default extractFile
+
+// module.exports = multer({ storage: storage }).single("image");
+
+  
+

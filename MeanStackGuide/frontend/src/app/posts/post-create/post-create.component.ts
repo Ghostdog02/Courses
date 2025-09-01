@@ -32,6 +32,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe((authStatus) => {
@@ -52,24 +53,27 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
         this.isLoading = true;
-        this.postsService.getPost(this.postId!).subscribe((postData) => {
-          this.isLoading = false;
-          this.post = {
-            id: postData._id,
-            title: postData.title,
-            content: postData.content,
-            imagePath: postData.imagePath,
-            creator: postData.creator,
-          };
-          this.form?.setValue({
-            title: this.post.title,
-            content: this.post.content,
-            image: this.post.imagePath,
+        this.postsService
+          .getPost(this.postId!)
+          .subscribe((postData) => {
+            this.isLoading = false;
+            this.post = {
+              id: postData._id,
+              title: postData.title,
+              content: postData.content,
+              imagePath: postData.imagePath,
+              creator: postData.creator,
+            };
+            this.form?.setValue({
+              title: this.post.title,
+              content: this.post.content,
+              image: this.post.imagePath,
+            });
           });
-        });
       } else {
         this.mode = 'create';
         this.postId = null;
+        this.isLoading = false;
       }
     });
   }
@@ -106,17 +110,19 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   }
 
   onSavePost() {
+    this.isLoading = true;
     if (this.form.invalid) {
+      console.log("Form is invalid");
+      this.isLoading = false;
       return;
     }
-
-    this.isLoading = true;
 
     if (this.mode === 'create') {
       this.postsService.addPost(
         this.form.value.title,
         this.form.value.content,
         this.form.value.image
+
       );
     } else {
       this.postsService.updatePost(
@@ -127,6 +133,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       );
     }
 
+    //this.isLoading = false;
     this.form.reset();
   }
 

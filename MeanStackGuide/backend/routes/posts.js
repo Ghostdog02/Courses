@@ -2,7 +2,7 @@ import express from "express";
 
 import PostsController from "../controllers/posts.js";
 
-import extractFile from "../middleware/file.js";
+import extractFile  from "../middleware/file.js";
 import checkAuth from "../middleware/check-auth.js";
 
 const router = express.Router();
